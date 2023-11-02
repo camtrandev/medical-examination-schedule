@@ -1,9 +1,20 @@
 
 const express = require('express');
+const db = require('../models/index')
 
 
-let getHomePage = (req, res) => {
-    return res.render('homePage.ejs')
+let getHomePage = async(req, res) => {
+    
+    try{
+        let data = await db.User.findAll();
+        return res.render('homePage.ejs',{
+            data:data
+        });
+
+    }catch (error){
+        console.log(error)
+    }
+
 }
 
 module.exports= {
