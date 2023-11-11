@@ -2,7 +2,10 @@ const express = require('express');
 const {
   getHomePage,
   getCrud,
-  postCrud
+  postCrud,
+  displayGetCrud,
+  getEditCrud,
+  putCrud
 }
   = require('../controllers/homeController')
 
@@ -13,6 +16,10 @@ let initWebroutes = (app) => {
   router.get('/', getHomePage);
   router.get('/crud', getCrud);
   router.post('/post-crud', postCrud);
+  router.get('/get-crud', displayGetCrud);
+  router.get('/edit-crud', getEditCrud);
+  router.post('/put-crud', putCrud);
+
 
   return app.use("/", router);
 }
