@@ -5,7 +5,7 @@ const db = require('../models/index')
 const salt = bcrypt.genSaltSync(10);
 
 // tạo user từ form 
-let createNewUser = async (data) => {
+const createNewUser = async (data) => {
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -82,7 +82,7 @@ const getUserInfoById = (userId) => {
 }
 
 // Hàm thực thi khi ấn vào nút Update để chỉnh sửa user
-let upDateUserData = (data) => {
+const upDateUserData = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             // chọc vào dataBasc tham chiếu đến User để upDate dữ liệu mới 
@@ -112,11 +112,29 @@ let upDateUserData = (data) => {
     })
 }
 
+const deleteUserById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id }
+            })
+            if (user) {
+                await user.destroy();
+            }
+
+            resolve();
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
 module.exports = {
     createNewUser,
     getAllUser,
     getUserInfoById,
-    upDateUserData
+    upDateUserData,
+    deleteUserById
 
 }
