@@ -10,7 +10,7 @@ const {
 }
   = require('../controllers/homeController')
 
-// import file Usercontroller dùng sử lý APi
+// import file Usercontroller dùng sử lý APi, liên quan đến người dùng thì cho vào controller
 const {
   handleLogin
 } = require('../controllers/userController')
