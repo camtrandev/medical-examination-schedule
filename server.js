@@ -4,11 +4,24 @@ const configViewEngine = require('./src/config/viewEngine');
 import initWebroutes from './src/routes/web';
 require('dotenv').config();
 const connectDB = require('./src/config/Databasc');
+const cors = require('cors')
 
-let app =  express();
+let app = express();
+
+// sử dụng cors 
+// app.use(cors({ origin: true }));
+const corsOptions = {
+    origin: '*',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+    origin: true,
+}
+
+app.use(cors(corsOptions))
+
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 configViewEngine(app);
 initWebroutes(app);
