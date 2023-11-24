@@ -4,6 +4,7 @@ const configViewEngine = require('./src/config/viewEngine');
 import initWebroutes from './src/routes/web';
 require('dotenv').config();
 const connectDB = require('./src/config/Databasc');
+// mặc định chorme sẽ chạn khi gọi API với các tên miền khác nhau nên dùng cors (vd: chạy trên công 3000 và 8080)
 const cors = require('cors')
 
 let app = express();

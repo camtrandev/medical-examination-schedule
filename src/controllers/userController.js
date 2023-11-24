@@ -1,7 +1,13 @@
 
 const {
-    handleUserLogin
+    handleUserLogin,
+    getAllUsers,
+    createNewUser,
+    deleteUser,
+    upDateUserData
 } = require('../services/userService');
+
+
 
 const handleLogin = async (req, res) => {
     let email = req.body.email;
@@ -28,6 +34,55 @@ const handleLogin = async (req, res) => {
     })
 }
 
+
+// api CRUD lấy người dùng 
+const handleGetAllUser = async (req, res) => {
+    let id = req.query.id;
+    if (!id) {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: 'Missing required parameters',
+            user: []
+        })
+    }
+    let users = await getAllUsers(id);
+    return res.status(200).json({
+        errCode: 0,
+        errMessage: 'ok!',
+        users
+    })
+
+}
+
+// API Create New User
+const handleCreateNewUser = async (req, res) => {
+    let message = await createNewUser(req.body);
+    console.log(message);
+    return res.status(200).json(message);
+}
+// API EditUser
+const handleEditUser = async (req, res) => {
+    let data = req.body;
+    let message = await upDateUserData(data);
+    return res.status(200).json(message)
+}
+// Delete User
+const handleDeleteUser = async (req, res) => {
+    if (!req.body.id) {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: "missing parameters!"
+        })
+    }
+    let message = await deleteUser(req.body.id);
+    return res.status(200).json(message);
+
+}
+
 module.exports = {
-    handleLogin
+    handleLogin,
+    handleGetAllUser,
+    handleCreateNewUser,
+    handleEditUser,
+    handleDeleteUser
 }

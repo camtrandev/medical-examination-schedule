@@ -1,6 +1,7 @@
 
 const bcrypt = require('bcryptjs');
-const db = require('../models/index')
+const db = require('../models/index');
+
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -22,7 +23,7 @@ const createNewUser = async (data) => {
             });
 
             // trả về 1 chuối messgae -- tương đương với câu lênh return
-            resolve('ok create a new user succeed')
+            resolve('ok create a new user succeed');
         } catch (e) {
             reject(e)
         }
@@ -89,7 +90,8 @@ const upDateUserData = (data) => {
             // Và cần phải biết Id của thằng user mới update được
             let user = await db.User.findOne({
                 // tìm id trong db trùng với id mà mình chuyền vào
-                where: { id: data.id }
+                where: { id: data.id },
+                raw: false
             })
             if (user) {
                 user.lastName = data.lastName;
@@ -116,7 +118,8 @@ const deleteUserById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let user = await db.User.findOne({
-                where: { id: id }
+                where: { id: id },
+                raw: false
             })
             if (user) {
                 await user.destroy();
@@ -136,5 +139,4 @@ module.exports = {
     getUserInfoById,
     upDateUserData,
     deleteUserById
-
 }

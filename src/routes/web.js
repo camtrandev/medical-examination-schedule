@@ -6,13 +6,18 @@ const {
   displayGetCrud,
   getEditCrud,
   putCrud,
-  deleteCrud
+  deleteCrud,
 }
   = require('../controllers/homeController')
 
 // import file Usercontroller dùng sử lý APi, liên quan đến người dùng thì cho vào controller
 const {
-  handleLogin
+  handleLogin,
+  handleGetAllUser,
+  handleCreateNewUser,
+  handleEditUser,
+  handleDeleteUser
+
 } = require('../controllers/userController')
 const router = express.Router();
 
@@ -28,6 +33,10 @@ let initWebroutes = (app) => {
 
   // API
   router.post('/api/login', handleLogin);
+  router.get('/api/get-all-user', handleGetAllUser);
+  router.post('/api/create-new-user', handleCreateNewUser);
+  router.put('/api/edit-user', handleEditUser);
+  router.delete('/api/delete-user', handleDeleteUser);
 
 
   return app.use("/", router);
