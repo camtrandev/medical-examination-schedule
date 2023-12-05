@@ -4,7 +4,8 @@ const {
     getAllUsers,
     createNewUser,
     deleteUser,
-    upDateUserData
+    upDateUserData,
+    getAllCodeService
 } = require('../services/userService');
 
 
@@ -79,10 +80,29 @@ const handleDeleteUser = async (req, res) => {
 
 }
 
+/**
+ * Viết API để lấy ra role (Phân quyền người dùng)
+ */
+
+let getAllCode = async (req, res) => {
+    try {
+        let data = await getAllCodeService(req.query.type);
+        return res.status(200).json(data);
+
+    } catch (e) {
+        console.log('check get all code error', e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
+}
+
 module.exports = {
     handleLogin,
     handleGetAllUser,
     handleCreateNewUser,
     handleEditUser,
-    handleDeleteUser
+    handleDeleteUser,
+    getAllCode
 }

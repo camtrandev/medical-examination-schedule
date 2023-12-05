@@ -35,7 +35,7 @@ let handleUserLogin = (email, password) => {
                     where: { email: email },
                     // cần phải raw để ẩn bớt mấy cái râu ria thì mới có thể ẩn password đi được  
                     raw: true,
-                    attributes: ['email', 'roleId', 'password'] // những trường mà mình muốn sâu ra
+                    attributes: ['email', 'roleId', 'password', 'firstName', 'lastName'] // những trường mà mình muốn sâu ra
                     // nếu không muốn xâu cái password ra màn hình thì hãy tra gg :"lm thế nào để delete 1 thuộc tính của 1 javascript object"
                 })
                 if (user) {
@@ -221,10 +221,40 @@ const upDateUserData = (data) => {
     })
 }
 
+/**
+ * viết API để lấy ra role (phân quyền người dùng)
+ */
+
+const getAllCodeService = (typeInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(typeInput)
+            if (!typeInput) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Maissing required parmeters!'
+                })
+            } else {
+                let res = {};
+                let allcode = await db.Allcode.findAll({
+                    where: { type: typeInput }
+                });
+                res.errCode = 0;
+                res.data = allcode;
+                resolve(res)
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin,
     getAllUsers,
     createNewUser,
     deleteUser,
-    upDateUserData
+    upDateUserData,
+    getAllCodeService
 }

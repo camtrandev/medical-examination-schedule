@@ -16,7 +16,8 @@ const {
   handleGetAllUser,
   handleCreateNewUser,
   handleEditUser,
-  handleDeleteUser
+  handleDeleteUser,
+  getAllCode
 
 } = require('../controllers/userController')
 const router = express.Router();
@@ -37,6 +38,10 @@ let initWebroutes = (app) => {
   router.post('/api/create-new-user', handleCreateNewUser);
   router.put('/api/edit-user', handleEditUser);
   router.delete('/api/delete-user', handleDeleteUser);
+
+  // Viết API allcode để lấy ROle để phân quyền người dùng
+
+  router.get('/allcode', getAllCode);
 
 
   return app.use("/", router);
